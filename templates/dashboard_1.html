@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width-device-width,initial-scale=1">
+      <title>Customer Feedback Classification & Analysis</title>
+      {% load static %}
+	
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'materialize/css/materialize.min.css' %}">
+	<script src="{% static 'js/Chart.min.js' %}"></script>
+	<script src="{% static 'js/fusioncharts.js' %}"></script>
+	<script src="{% static 'js/fusioncharts.theme.candy.js' %}"></script>
+
+	<style>
+        body {
+				min-height: 100vh;
+				flex-direction: column;
+				font-family: "Lucida Grande", sans-serif;
+                overflow-x:hidden;
+			}
+			main {
+				flex: 1 0 auto;
+			}
+			.margin-top{
+				margin-top: 10rem;
+			}
+			.my-height {
+				height: 2.3rem;
+			}
+			.wrapper {
+				display: block;
+			}
+
+			#sidebar {
+				margin-top: 69px;
+				margin-bottom: 30px;
+				min-width: 180px;
+				max-width: 180px;
+				height: 400vh;
+				position: fixed; 
+				top: 0;
+				left: 0;
+				/* top layer */
+				background-color: RGB(107,107,107);
+            }
+            #Main_heading {
+				font-size:24px;
+				color:white;
+			}
+			#Sub_heading {
+				font-size:15px;
+				color:white;
+			}
+			#nav1 {
+				position:fixed;
+			}
+			
+            #header1 {
+				padding-top:15px;
+				background-color: RGB(95,0,95);
+			}
+			#header2 {
+				font-size:24px;
+				color:white;
+			}
+			#header3 {
+				padding-left:0px;
+				background-color: RGB(95,0,95);
+			}
+			#header4 {
+				color:white;
+				font-size: 15px;
+				font-style:italic;
+				font-weight: bold;
+				text-align: left;
+			}
+            .Welcome {
+                font-size:16px;
+                color:white;
+                margin-top:10x;
+                padding-left:650px;
+            }
+            .Logout {
+                font-size:14px;
+                margin-top:00px;
+                padding-left:1050px;
+                color:yellow;
+            }
+            #body1 {
+                position: relative;
+                margin-top : 100px;
+            }
+            #body2 {
+                position: relative;
+                height:250px;
+            }
+            #body3 {
+                text-align: center;
+                color:black;
+                font-size: 15px;
+            }
+            #body4 {
+                height:300px;
+            }
+            #body5 {
+                padding-left: 45px;
+            }
+            #body6 {
+                font-weight: bold;
+                font-size: 17px;
+                text-align:center;
+                margin-right: 55px;
+            }
+            #body7 {
+                position: relative;
+                height:250px;
+            }
+            #footer1 {
+                z-index:9999;
+                width:100%;
+                position: fixed;
+                bottom:0;
+            }
+            #footer2 {
+                background-color: RGB(95,0,95);
+            }
+            .word_cloud {
+                border:2px solid black;
+                width:400px;
+                height:300px;
+            }
+            .a1_id{
+                margin-left:10px;
+            }
+            #b1_id {
+                color:dodgerblue;
+            }
+			.tab {
+			  margin-left:60px;
+			  border: 1px solid #ccc;
+			  background-color: #f1f1f1;
+			  width:50%;
+			}
+			.tablinks {
+				display:inline-block;
+			}
+			button{
+				display:inline-block;
+			}
+
+			/* Style the buttons inside the tab */
+			.tab button {
+			  background-color: inherit;
+			  float: center;
+			  border: none;
+			  outline: none;
+			  cursor: pointer;
+			  padding: 14px 160px;
+			  transition: 0.3s;
+			  font-size: 20px;
+			  height:20px;
+			}
+
+			/* Change background color of buttons on hover */
+			.tab button:hover {
+			  background-color: #ddd;
+			}
+
+			/* Create an active/current tablink class */
+			.tab button.active {
+			  background-color: #ccc;
+			}
+
+			/* Style the tab content */
+			.tabcontent {
+			  display: none;
+			  padding: 6px 8px;
+			  border: 1px solid #ccc;
+			  border-top: none;
+			}
+			.wrapper {
+			  display: flex;
+			  background-color: white;
+			}
+
+			div {
+				height: 50px;
+			}
+			
+			.tile {
+			  display: grid; 
+			  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.3);
+			  border-radius: 4px;
+			}
+			
+			.mybox {
+			  display: grid; 
+			grid-template-rows: 55px auto;
+			  margin-top:10px;
+			  background-color: #fff;
+			  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.3);
+			  border-radius: 4px;
+			  margin-left:20px; 
+			  height:360px; 
+			  width:800px
+			}
+            
+         .mybox_body {
+			  background-color: #8e5ea2;
+    		}
+         
+         .btn {
+          background-color: #8e5ea2;
+          border: none;
+          color: white;
+          padding: 1px 5px;
+          cursor: pointer;
+          font-size: 20px;
+        }
+        
+        /* Darker background on mouse-over */
+        .btn:hover {
+          background-color: #8e5ea2;
+        }
+		.th	{
+			text-align:center;height:40px
+		}
+		.td {
+			text-align:left;padding-left:10px;height:40px
+		}
+		
+		#KPI{
+			height:auto;
+			margin-top:50px;
+		}
+		#NLP	{
+			height:auto;
+			margin-top:50px
+		}
+		#region_form	{
+			display:flex
+		}
+		#open {
+			margin-left:160px; height:80px; width:300px; background-color:#3e95cd
+		}
+		#close	{
+			margin-left:60px; height:80px; width:300px; background-color:#8e5ea2
+		}
+		#total	{
+			 margin-left:60px; height:80px; width:300px; background-color:#3cba9f;
+		}
+		#tile1 {
+			font-size:25px;color:white;text-align:center
+		}
+		#box_title	{
+			color:white; font-size:20px; margin-top:10px; margin-left:10px
+		}
+		#box_full	{
+			margin-left:20px; width:100%; height:auto;
+		}
+		
+		#footer1 {
+				z-index:9999;
+				width:100%;
+				position:fixed;
+				bottom:0;
+			}
+		#footer2 {
+			background-color: RGB(95,0,95);
+		}
+	
+      </style>
+   </head>
+   <body>
+   
+		<header>
+			<nav class="my-height" id="nav1">
+				<div class="nav-wrapper valign-wrapper" id="header1">
+					<a href="/" ><span id="header2"> &nbsp Customer Feedback Classification and Analysis </span></a>
+					<span id="Welcome">&nbsp Hello, {{request.user}}</span>
+				</div>
+				<div class="nav-wrapper valign-wrapper" id="header3">
+					<span id="header4">&nbsp &nbsp &nbsp Powered by AI Zumba</span>
+					<span id="Logout"> <a href="{% url 'logout' %}">Logout</a></span>{% csrf_token %}
+				</div>
+			</nav>
+		</header>
+		
+		<main>
+		
+        <div class="container-fluid">
+		<div class="row">
+
+			<div class="col-sm-2">
+				<nav id="sidebar">
+					<ul>
+						<a href="/" id="a1_id"><i class="fa fa-home"></i> &nbsp Home </a>
+						<a href="/graphs" id="a1_id"><i class="fa fa-edit"></i> <b id="b1_id"> &nbsp Dashboard </b></a>
+						<a href="/admin_index" id="a1_id"><i class="fa fa-user"></i> &nbsp Admin </a>
+					</ul>
+				</nav>
+			</div>
+		</div>
+        </div>
+		
+		<br><<br><br><br><br>
+		<div class="tab" style="margin-left:100px:height:5px">
+				<button class="tablinks" onclick="openCity(event, 'NLP')" id="defaultOpen" >Overall Feedback Analysis</button>
+				<button class="tablinks" style="margin-left:555px;margin-bottom:600px;" onclick="openCity(event, 'KPI')" >Channel Based Analysis</button>
+		</div>
+        <br>
+		
+		<div id="NLP" class="tabcontent">
+            <div class="wrapper" style="background-color:white">
+                <div class="mybox" style="height:150px;width:700px">
+                    <canvas id="bar-chart-grouped1" height="120" style="padding-left:20px;margin-top:10px"></canvas>
+                </div>
+			</div>
+			<br><br><br><br>
+			<div id="fusion-chart" style="height:100px;width:80px;"></div>
+		</div>
+
+		</div>
+		</div>
+		</div>
+
+		<div id="KPI" class="tabcontent" style="height:10px">
+
+			<div class="col-sm-2">
+	
+				<div class="row">
+					  <label class="control-label"><span id="label1"><b>Select Channel</b></span></label>
+				  <select class="form-control" id="channel_id" required="required", name="channel_input" required="required"> 
+					 <option value="">Select Channel</option>
+					 {% for key,val in intent.items %}
+					 <option id="intents" value="{{val}}">{{ val }}</option>
+					 {% endfor %}
+				</select>   
+				</div>
+			</div>
+			<div class="col-sm-4" id="body2">
+                <canvas id="myChart1"></canvas><br>
+                <p id="body3"> Total Feedbacks Classified : {{ category_sum | safe }}</p>
+            </div>
+
+            <div class="col-sm-1"> </div>    
+            <div class="col-sm-4" id="body4">
+                <canvas id="myChart"></canvas>
+            </div>
+      
+        </div></div>
+        <div class="container-fluid">
+    <div class="row">        
+        <div class="col-sm-4" id="body5">
+            <br><br>
+        <p id="body6">Word Cloud</p>
+        <br>
+        <svg id="word_cloud"></svg>
+        </div>
+        <div class="col-sm-1"></div>
+          <br>
+            <div class="col-sm-4" id="body7">
+                <br>
+                <canvas id="myChart3"></canvas>
+            </div>
+    </div>
+    </div>
+
+
+
+		</div>
+			</div>
+			</div>
+		</div>
+
+	
+				
+	</div>
+	
+</body>
+</main>
+
+<footer class="page-footer transparent" id="footer1">
+	<div class="footer-copyright darken-2 my-footer valign-wrapper" id="footer2">
+		<div class="container white-text center">
+		<h6>Copyright © 2020 All rights reserved:
+                    <a href="#"> www.tcs.com</a>
+                    <span>|</span>
+                    Terms of Use and Privacy</h6></div>
+	</div>
+</footer>
+
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'materialize/js/materialize.min.js' %}"></script>
+<script src="{% static 'js/Chart.min.js' %}"></script>
+</body>
+
+<script>
+
+let myChart = document.getElementById('myChart').getContext('2d');
+      // Global Options
+      Chart.defaults.global.defaultFontFamily = 'Roboto';
+      Chart.defaults.global.defaultFontSize = 14;
+      Chart.defaults.global.defaultFontColor = '#777';
+
+      let onechart = new Chart(myChart, {
+      
+            type: 'bar',
+            data: {
+                labels: {{ sat_keys | safe }},
+                 datasets: [{
+                    label: 'Count',
+                    data:{{ sat_data }},
+                    backgroundColor: [
+                        'rgba(0, 100, 100, 0.8)',
+                        'rgba(255, 6, 56, 0.8)',
+                        'rgba(255, 255, 36, 0.8)',
+                        'rgba(255, 128, 64, 0.8)',
+                        'rgba(40, 40, 255, 0.8)',
+                    ],
+                    
+                    borderWidth: 1,
+                    borderColor:'#777',
+                    hoverBorderWidth:2,
+                    hoverBorderColor:'#000'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            title:{
+                  display:true,
+                  text: 'Satisfaction index',
+                  fontColor: "black",
+                  fontSize:16,
+                  padding:15
+                  },
+                
+                legend:{
+                    display:false,
+                    position:'right',
+                    
+                labels:{
+                  fontColor: "black",
+                  fontSize:14
+                  
+                }
+            },
+
+            layout:{
+               padding:{
+                  left:1,
+                  right:1,
+                  bottom:1,
+                  top:1,
+               }
+            },
+
+            scales: {
+                    yAxes: [{
+                      scaleLabel:{ 
+                            fontSize: 14,display:true, labelString: 'Satisfaction Level',fontColor:"black"},
+                        ticks: {
+                            fontColor:"black",
+                            beginAtZero: true,
+                            autoskip: true
+                        
+
+                        }
+                    }],
+                     xAxes: [{
+                     scaleLabel:{ 
+                            fontSize: 14,display:true, labelString: 'Satisfaction Category',fontColor:"black"},
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor:"black",
+                            fontSize:13.5
+
+                        }
+                    }],
+                },
+                tooltips:{
+                enabled:true,
+                
+                }
+                }
+                });
+
+
+                let myChart1 = document.getElementById('myChart1').getContext('2d');
+      let twochart = new Chart(myChart1, {
+      
+            type: 'doughnut',
+            data: {
+                labels:{{cat_keys_graph | safe}},
+                 datasets: [{
+                    label: 'Score',
+                    data:{{ cat_data }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    
+                    borderWidth: 1,
+                    borderColor:'#777',
+                    hoverBorderWidth:2,
+                    hoverBorderColor:'#000'
+                }]
+            },
+
+            options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          position: 'bottom',
+          labels: {
+            fontSize: 12,
+            fontColor:"black"
+          }
+        },
+        title: {
+          display: true,
+          text: 'Feedback Classification',
+          fontSize: 16,
+          fontColor:"black",
+          padding:15
+        }
+      }
+                });
+
+
+                let myChart3 = document.getElementById('myChart3').getContext('2d');
+      let sent_chart = new Chart(myChart3, {
+      
+            type: 'pie',
+            data: {
+                labels:{{sent_keys | safe}},
+                 datasets: [{
+                    label: 'Score',
+                    data:{{ sent_data }},
+                    backgroundColor: [
+                        'rgba(34, 139, 34, 0.8)',
+                        'rgba(255, 6, 56, 0.7)',
+                        
+                        
+                        
+                    ],
+                    
+                    borderWidth: 1,
+                    borderColor:'#777',
+                    hoverBorderWidth:2,
+                    hoverBorderColor:'#000'
+                }]
+            },
+
+            options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          position: 'bottom',
+          labels: {
+            fontSize: 12,
+            fontColor:"black"
+          }
+        },
+        title: {
+          display: true,
+          text: 'Sentiment Classification',
+          fontSize: 16,
+          fontColor:"black",
+          padding:25
+        }
+      }
+                });
+      
+      </script>
+	  
+	  <script {{ script_nonce }} >
+        //import {select, selectAll} from "d3"
+        //import * as d3 from "d3"
+
+		// List of words
+        var fill = d3.scaleOrdinal(d3.schemeCategory20);
+
+        var myWords = {{ wordcloud | safe}}
+
+		// set the dimensions and margins of the graph
+		var margin = {top: 5, right: 5, bottom: 5, left: 5},
+			width = 400 
+			height = 300 
+
+		// append the svg object to the body of the page
+		var svg = d3.select("#word_cloud").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+		  .append("g")
+            .attr("transform",
+				  "translate(" + margin.left + "," + margin.top + ")");
+
+		// Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
+		// Wordcloud features that are different from one word to the other must be here
+		var layout = d3.layout.cloud()
+		  .size([width, height])
+		  .words(myWords.map(function(d) { return {text: d.word, size:d.size}; }))
+		  .padding(6)        //space between words
+		  .fontSize(function(d) { return d.size + 18; })      // font size of words
+          .rotate(function() {return ~~(4) * 90;})
+		  .on("end", draw);
+		layout.start();
+
+		// This function takes the output of 'layout' above and draw the words
+		// Wordcloud features that are THE SAME from one word to the other can be here
+		function draw(words) {
+		  svg
+			.append("g")
+			  .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+			  .selectAll("text")
+				.data(words)
+			  .enter().append("text")
+				.style("font-size", function(d) { return d.size; })
+				.style("fill", (d,i) => fill(i))
+				.attr("text-anchor", "middle")
+				.style("font-family", "Impact")
+				.attr("transform", function(d) {
+				  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+				})
+				.text(function(d) { return d.text; });
+		}
+</script>
+<script type="text/javascript">
+
+    function openCity(evt, Channel) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(Channel).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+    new Chart(document.getElementById("bar-chart-grouped1"), {
+    type: 'bar',
+    data: {
+      labels: ["Chatbot", "Phone", "Self Service", "Virtual Agent"],
+      datasets: [
+        {
+          label: "Total",
+          backgroundColor: "#3e95cd",
+          data: [45,58,53,65]
+        }, {
+          label: "Positive",
+          backgroundColor: "#8e5ea2",
+          data: [28,37,23,42]
+        }, {
+          label: "Negative",
+          backgroundColor: "#3e95ab",
+          data: [17,21,30,23]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Total Feedbacks Across All Channels'
+      }
+    }
+});
+
+const dataSource = {
+  chart: {
+    caption: "Overall Customer Satisfaction Score",
+    lowerlimit: "0",
+    upperlimit: "100",
+    showvalue: "1",
+    numbersuffix: "%",
+    theme: "candy",
+    showtooltip: "0"
+  },
+  colorrange: {
+    color: [
+      {
+        minvalue: "0",
+        maxvalue: "50",
+        code: "#F2726F"
+      },
+      {
+        minvalue: "50",
+        maxvalue: "75",
+        code: "#FFC533"
+      },
+      {
+        minvalue: "75",
+        maxvalue: "100",
+        code: "#62B58F"
+      }
+    ]
+  },
+  dials: {
+    dial: [
+      {
+        value: "81"
+      }
+    ]
+  }
+};
+
+FusionCharts.ready(function() {
+  var myChart = new FusionCharts({
+    type: "angulargauge",
+    renderAt: "fusion-chart",
+    width: "100%",
+    height: "100%",
+    dataFormat: "json",
+	theme: "candy",
+    dataSource
+  });
+FusionCharts.render();
+});
+
+
+</script>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Customer Feedback Classification & Analysis</title>
+	{% load static %}
+
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
+	<link rel="stylesheet" href="{% static 'materialize/css/materialize.min.css' %}">
+
+    </head>
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+        }
+        .my-height {
+				    height: 2.4rem;
+			  }
+        #nav1 {
+				position:fixed;
+        z-index:9999999;
+			}
+			#header1 {
+				padding-top:15px;
+				background-color: RGB(95,0,95);
+			}
+			#header2 {
+				font-size:24px;
+				color:white;
+			}
+			#header3 {
+				padding-left:0px;
+				background-color: RGB(95,0,95);
+			}
+			#header4 {
+				color:white;
+				font-size: 15px;
+				font-style:italic;
+				font-weight: bold;
+				text-align: left;
+			}
+			.mybox {
+			  display: grid; 
+           grid-template-rows: 55px auto;
+			  margin-top:10px;
+			  background-color: #fff;
+			  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.3);
+			  border-radius: 4px;
+			  margin-left:40px
+			}
+		
+            
+         .mybox_body {
+			  background-color: #8e5ea2;
+			  
+    		}
+         
+      #Welcome {
+				font-size:16px;
+				color:white;
+				margin-top:10x;
+				margin-left:500px;
+			}
+			#Logout {
+				font-size:14px;
+				margin-top:00px;
+				margin-left:860px;
+				color:yellow;
+			}
+        #sidebar {
+            margin-top: 65px;
+            margin-bottom: 30px;
+            min-width: 180px;
+            max-width: 180px;
+            height: 200vh;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            /* top layer */
+            background-color: RGB(107,107,107);
+            z-index:999999;
+        }
+        .a1_id {
+            margin-left:10px
+        }
+        #b1_id {
+            color:dodgerblue;
+        }
+        #btn1{
+            margin-top:50px;
+            margin-left:165px;
+            width:554px;
+            font-weight:bold;
+            font-size:17px;
+            background-color: grey;
+        }
+        #btn2 {
+            margin-top:50px;
+            width:553px;
+            font-weight:bold;
+            font-size:17px;
+            background-color: grey;
+        }
+        #btn3 {
+            margin-left:770px;
+            margin-bottom:200px;
+            font-weight:bold;
+            width:320px;
+            display:inline;
+        }
+		#btn4 {
+			font-weight:bold;
+			width:120px;
+			margin-left:63px;
+      background-color: grey;
+		}
+		#channel_id {
+			margin-top:30px;
+		}
+		
+		.dropdown1 { top:220px; left:120px; width:250px; height:200px; margin-left:180px; background-color:white; }
+		.sc-mask { margin-top:50px; top:20px; right:20px; left:20px; height:120px; background-color:#555888; border-radius:150px 150px 0 0 }
+		.sc-percentage { position:absolute;  }
+		.sc-percentage { transform:rotate(158deg); transform-origin:top center; }
+		.sc-min { float:left; }
+		.sc-max { float:right; }
+		.sc-value { position:center; font-size:18px; font-weight:700 }
+		.body1 {
+            margin-top:200px;
+            height:1000px;
+            width:800px;
+        }
+        #body1 {
+            position: relative;
+            margin-top : 80px;
+        }
+        #body2 {
+            position: relative;
+            height:220px;
+			margin-left:150px;
+        }
+        #body3 {
+			position: relative;
+            text-align: center;
+            color:black;
+            font-size: 15px;
+			margin-top: -18px;
+        }
+        #body4 {
+		position: relative;
+            height:270px;
+			margin-left:770px;
+			margin-top:-250px;
+        }
+        #body5 {
+			position: relative;
+            padding-left: 45px;
+			margin-left:240px;
+        }
+        #body6 {
+			position: relative;
+            font-weight: bold;
+            font-size: 17px;
+            text-align:center;
+            margin-right: 45px;
+			margin-top:-50px;
+        }
+        #body7 {
+			position: relative;
+            margin-left:840px;
+            height:250px;
+			margin-top:-400px;
+        }
+		
+        #footer1 {
+            z-index:9999999;
+            width:100%;
+            position:fixed;
+            bottom:0;
+        }
+        #footer2 {
+            background-color: RGB(95,0,95);
+            height:30px;
+            color:white;
+            text-align:center;
+            padding-top:5px;
+        }
+        
+    </style>
+<body>
+
+  <header>
+    <nav class="my-height" id="nav1">
+      <div class="nav-wrapper valign-wrapper" id="header1">
+        <a href="/" ><span id="header2"> &nbsp Customer Feedback Classification and Analysis </span></a>
+        <span id="Welcome">&nbsp Hello, {{request.user}}</span>
+      </div>
+      <div class="nav-wrapper valign-wrapper" id="header3">
+        <span id="header4">&nbsp&nbsp&nbsp Powered by AI Zumba</span>
+        <span id="Logout"> <a href="{% url 'logout' %}">Logout</a></span>{% csrf_token %}
+      </div>
+    </nav>
+</header>
+	
+    
+    <main>
+      <form method="POST"> {% csrf_token %}
+        <div class="container-fluid">
+            
+            
+            <div class="row">
+               <div class="col-sm-2">
+                  <nav id="sidebar">
+      
+                      <br>
+                      <ul>
+                                <a href="/" id="a1_id"><i class="fa fa-home"></i> &nbsp Home </a>
+                              <!--  <a href="/graphs"><i class="fa fa-edit"></i> &nbsp Dashboard </a>-->
+                                <a href="/admin_index" id="a1_id"><i class="fa fa-user"></i> &nbsp Admin </a>
+                      </ul>
+                  </nav>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="btn-group" role="group">
+                  <input type="submit" value="Overall Feedback Analysis" class="btn btn-secondary" formaction="{% url 'graphs' %}" id="btn1">{% csrf_token %}
+                  <!--<button type="button" class="btn btn-light" formaction="{% url 'channel_wise' %}" id="btn2">Channel Based Analysis</button>{% csrf_token %}-->
+				  <input type="submit" value= "Channel Based Analysis" formaction="{% url 'channel_wise' %}" id="btn2" class="btn btn-light">{% csrf_token %}
+                </div>
+            </div>
+			<div class="col-sm-3"></div>
+          <!--<div class="row">
+			<div class="wrapper" style="background-color:white;margin-top:10px">
+				
+				<div class="mybox" style="margin-left:20px; height:250px; width:400px">
+        
+                <div class="mybox_body">
+                    <p style="color:white; font-size:20px; margin-top:10px; margin-left:10px"> 
+                        TOP 10 KNOWLEDGE BASE ARTICLES 
+                    <a id="downloadq" download="chart1.png" style="padding-left:220px">
+                        <button class="btn" onClick="download('bar-chart')"><i class="fa fa-download"></i> </button>
+                    </a>
+                    </p>
+                </div>
+        			 
+                <canvas id="bar-chart" height="140" style="padding-left:20px;margin-top:20px;margin-bottom:20px"></canvas> 
+				
+            </div>
+				
+            
+            <div class="mybox" style = "margin-left:20px; height:250px; width:400px">
+                
+                <div class="mybox_body">
+                    <p style="color:white; font-size:20px; margin-top:10px; margin-left:10px"> 
+                        KNOWLEDGE BASE ARTICLES USAGE ON INCIDENTS
+                    <a id="download" download="chart1.png" style="padding-left:70px">
+                        <button class="btn" onClick="download('pie-chart')"><i class="fa fa-download"></i> </button>
+                    </a>
+                    </p>
+                </div>
+        			 
+               <canvas id="pie-chart" height="135" style="padding-left:20px;margin-top:10px"></canvas>
+				
+            </div>
+			</div>-->
+              <div class="container-fluid">
+			<div class="row">     
+		
+			
+      <div class="col-sm-1" id="body2">
+	  
+	  <div class="mybox" style="margin-left:20px; height:300px; width:450px">
+        
+                <div class="mybox_body">
+                    <div style="color:white; font-size:20px; margin-top:10px; margin-left:10px"> 
+                        Total Feedbacks Classified : {{ category_sum | safe }}  
+                    <span style="padding-left:330px;">
+                        <button class="btn" onClick="download('mychart1')"><i class="fa fa-download"></i> </button>
+                    </span>
+                    </div>
+                </div>
+        			 
+                <canvas id="myChart1" width="500" height="250"></canvas> 
+				
+            </div>
+          
+      </div>
+      <div class="col-sm-1"></div>
+	  
+	  
+	   <div class="mybox" style="margin-left:400px; height:300px; width:450px">
+        
+                <div class="mybox_body">
+                    <div style="color:white; font-size:20px; margin-top:10px; margin-left:10px"> 
+                        Satisfaction Score  
+                    <span style="padding-left:330px;">
+                        <button class="btn" onClick="download('mychart')"><i class="fa fa-download"></i> </button>
+                    </span>
+                    </div>
+                </div>
+        			 
+                <canvas id="myChart"></canvas> 
+				
+            </div>
+  </div>
+  </div>
+   
+      <br><br>
+      <!--<div class="container-fluid">
+  
+		  <div class="col-sm-4" id="body5">
+          <br><br>
+      <p id="body6">Word Cloud</p>
+      <br>
+      <svg id="word_cloud" style="margin-right:50px;width:600px;height:300px;"></svg>
+      </div>
+      <div class="col-sm-1"></div>
+        <br>
+          <div class="col-sm-4" id="body7">
+              <br>
+              <canvas id="myChart3"></canvas>
+          </div>
+  </div>
+  </div>
+
+
+        </div>-->
+		
+		
+		
+		<div class="container-fluid">
+			<div class="row">     
+		
+			
+      <div class="col-sm-1" id="body2">
+	  
+	  <div class="mybox" style="margin-left:20px; height:300px; width:450px">
+        
+                <div class="mybox_body">
+                    <div style="color:white; font-size:20px; width:400px; margin-top:10px; margin-left:10px"> 
+                        WordCloud  
+                    <span style="padding-left:330px;">
+                        <button class="btn" onClick="download('mychart1')"><i class="fa fa-download"></i> </button>
+                    </span>
+                    </div>
+                </div>
+        			 
+                <svg id="word_cloud" style="margin-right:50px;width:400px;height:220px;"></svg>
+				
+            </div>
+          
+      </div>
+      <div class="col-sm-1"></div>
+	  
+	  
+	   <div class="mybox" style="margin-left:400px; height:300px; width:450px">
+        
+                <div class="mybox_body">
+                    <div style="color:white; font-size:20px; margin-top:10px; margin-left:10px"> 
+                        Sentiment Classification
+                    <span style="padding-left:330px;">
+                        <button class="btn" onClick="download('mychart')"><i class="fa fa-download"></i> </button>
+                    </span>
+                    </div>
+                </div>
+        			 <br>
+                <canvas id="myChart3"></canvas> 
+				
+            </div>
+  </div>
+  </div>
+		<br><br>
+  </form>
+    </main>
+
+
+<footer class="page-footer transparent" id="footer1">
+    <div class="footer-copyright darken-2 my-footer valign-wrapper" id="footer2">
+        <div class="container white-text center">
+        <h6>Copyright © 2020 All rights reserved:
+                    <a href="#"> www.tcs.com</a>
+                    <span>|</span>
+                    Terms of Use and Privacy</h6>
+        </div>
+    </div>
+</footer>
+</body>
+
+
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"  ></script>
+<script src="{% static 'materialize/js/materialize.min.js' %}"  ></script>
+<script src="{% static 'js/Chart.min.js' %}"  ></script>
+<script type = "text/javascript" src="{% static '/static/js/d3.js' %}" charset = "UTF-8"  ></script>
+<script type = "text/javascript" src="{% static 'js/d3.layout.cloud.js' %}" charset = "UTF-8"  ></script>
+<script type = "text/javascript">
+      
+      let myChart = document.getElementById('myChart').getContext('2d');
+      // Global Options
+      Chart.defaults.global.defaultFontFamily = 'Roboto';
+      Chart.defaults.global.defaultFontSize = 14;
+      Chart.defaults.global.defaultFontColor = '#777';
+
+      let onechart = new Chart(myChart, {
+      
+            type: 'bar',
+            data: {
+                labels: {{ sat_keys | safe }},
+                 datasets: [{
+                    label: 'Count',
+                    data:{{ sat_data }},
+                    backgroundColor: [
+                        'rgba(0, 100, 100, 0.8)',
+                        'rgba(255, 6, 56, 0.8)',
+                        'rgba(255, 255, 36, 0.8)',
+                        'rgba(255, 128, 64, 0.8)',
+                        'rgba(40, 40, 255, 0.8)',
+                    ],
+                    borderWidth: 1,
+                    borderColor:'#777',
+                    hoverBorderWidth:2,
+                    hoverBorderColor:'#000'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+            title:{
+                  display:true,
+                  text: 'Satisfaction index',
+                  fontColor: "black",
+                  fontSize:16,
+                  padding:15
+                  },
+                legend:{
+                    display:false,
+                    position:'right',
+                labels:{
+                  fontColor: "black",
+                  fontSize:14
+                }
+            },
+            layout:{
+               padding:{
+                  left:1,
+                  right:1,
+                  bottom:1,
+                  top:1,
+               }
+            },
+            scales: {
+                    yAxes: [{
+                      scaleLabel:{ 
+                            fontSize: 14,display:true, labelString: 'Satisfaction Level',fontColor:"black"},
+                        ticks: {
+                            fontColor:"black",
+                            beginAtZero: true,
+                            autoskip: true
+                        }
+                    }],
+                     xAxes: [{
+                     scaleLabel:{ 
+                            fontSize: 14,display:true, labelString: 'Satisfaction Category',fontColor:"black"},
+                        ticks: {
+                            beginAtZero: true,
+                            fontColor:"black",
+                            fontSize:13.5
+                        }
+                    }],
+                },
+                tooltips:{
+                enabled:true,
+                }
+                }
+             });
+
+
+      let myChart1 = document.getElementById('myChart1').getContext('2d');
+      let twochart = new Chart(myChart1, {
+            type: 'doughnut',
+            data: {
+                labels:{{cat_keys_graph | safe}},
+                 datasets: [{
+                    label: 'Score',
+                    data:{{ cat_data }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1,
+                    borderColor:'#777',
+                    hoverBorderWidth:2,
+                    hoverBorderColor:'#000'
+                }]
+            },
+
+            options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        legend: {
+          position: 'bottom',
+          labels: {
+            fontSize: 12,
+            fontColor:"black"
+          }
+        },
+        title: {
+          display: true,
+          text: 'Feedback Classification',
+          fontSize: 16,
+          fontColor:"black",
+          padding:15
+        }
+      }
+                });
+
+      let myChart3 = document.getElementById('myChart3').getContext('2d');
+      let sent_chart = new Chart(myChart3, {
+      
+            type: 'pie',
+            data: {
+                labels:{{sent_keys | safe}},
+                 datasets: [{
+                    label: 'Score',
+                    data:{{ sent_data }},
+                    backgroundColor: [
+                        'rgba(34, 139, 34, 0.8)',
+                        'rgba(255, 6, 56, 0.7)',
+                    ],
+                    borderWidth: 1,
+                    borderColor:'#777',
+                    hoverBorderWidth:2,
+                    hoverBorderColor:'#000'
+                }]
+            },
+
+            options: {
+					responsive: true,
+					maintainAspectRatio: true,
+					legend: {
+						position: 'bottom',
+						labels: {
+							fontSize: 12,
+							fontColor:"black"
+			  }
+			},
+		  }
+		});      
+      </script>
+	  
+	  <script  >
+        //import {select, selectAll} from "d3"
+        //import * as d3 from "d3"
+
+		// List of words
+        var fill = d3.scaleOrdinal(d3.schemeCategory20);
+
+        var myWords = {{ wordcloud | safe}}
+
+		// set the dimensions and margins of the graph
+		var margin = {top: 5, right: 5, bottom: 5, left: 5},
+			width = 400 
+			height = 300 
+
+		// append the svg object to the body of the page
+		var svg = d3.select("#word_cloud").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+		  .append("g")
+            .attr("transform",
+				  "translate(" + margin.left + "," + margin.top + ")");
+
+		// Constructs a new cloud layout instance. It run an algorithm to find the position of words that suits your requirements
+		// Wordcloud features that are different from one word to the other must be here
+		var layout = d3.layout.cloud()
+		  .size([width, height])
+		  .words(myWords.map(function(d) { return {text: d.word, size:d.size}; }))
+		  .padding(6)        //space between words
+		  .fontSize(function(d) { return d.size + 18; })      // font size of words
+          .rotate(function() {return ~~(4) * 90;})
+		  .on("end", draw);
+		layout.start();
+
+		// This function takes the output of 'layout' above and draw the words
+		// Wordcloud features that are THE SAME from one word to the other can be here
+		function draw(words) {
+		  svg
+			.append("g")
+			  .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+			  .selectAll("text")
+				.data(words)
+			  .enter().append("text")
+				.style("font-size", function(d) { return d.size; })
+				.style("fill", (d,i) => fill(i))
+				.attr("text-anchor", "middle")
+				.style("font-family", "Impact")
+				.attr("transform", function(d) {
+				  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+				})
+				.text(function(d) { return d.text; });
+		}
+</script>
+
+
+
+
+
+
+
+<script type="text/javascript">
+    var ctx = document.getElementById('myChart');
+      // Global Options
+//      Chart.defaults.global.defaultFontFamily = 'Roboto';
+  //    Chart.defaults.global.defaultFontSize = 14;
+    //  Chart.defaults.global.defaultFontColor = '#777';
+
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ["Chatbot", "Phone", "Self Service", "Virtual Agent"],
+      datasets: [
+        {
+          label: "Total",
+          backgroundColor: "#3e95cd",
+          data: [45,58,53,65]
+        }, {
+          label: "Positive",
+          backgroundColor: "#8e5ea2",
+          data: [28,37,23,42]
+        }, {
+          label: "Negative",
+          backgroundColor: "#3e95ab",
+          data: [17,21,30,23]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Total Feedbacks Across All Channels',
+        border: true,
+      }
+    }
+});
+
+const dataSource = {
+  chart: {
+    caption: "Overall Customer Satisfaction Score",
+    lowerlimit: "0",
+    upperlimit: "100",
+    showvalue: "1",
+    numbersuffix: "%",
+    theme: "candy",
+    showtooltip: "0"
+  },
+  colorrange: {
+    color: [
+      {
+        minvalue: "0",
+        maxvalue: "50",
+        code: "#F2726F"
+      },
+      {
+        minvalue: "50",
+        maxvalue: "75",
+        code: "#FFC533"
+      },
+      {
+        minvalue: "75",
+        maxvalue: "100",
+        code: "#62B58F"
+      }
+    ]
+  },
+  dials: {
+    dial: [
+      {
+        value: "81"
+      }
+    ]
+  }
+};
+
+
+//Knob
+
+function demoKnob() {
+				// Create knob element
+				const knob = pureknob.createKnob(200, 200);
+
+				// Set properties.
+				knob.setProperty('angleStart', -0.75 * Math.PI);
+				knob.setProperty('angleEnd', 0.75 * Math.PI);
+				knob.setProperty('colorFG', 'limegreen');
+				knob.setProperty('colorBG', 'lightgray')
+				knob.setProperty('trackWidth', 0.4);
+				knob.setProperty('valMin', 0);
+				knob.setProperty('valMax', 100);
+
+				// Set initial value.
+				knob.setValue(73)
+
+				/*
+				 * Event listener.
+				 *
+				 * Parameter 'knob' is the knob object which was
+				 * actuated. Allows you to associate data with
+				 * it to discern which of your knobs was actuated.
+				 *
+				 * Parameter 'value' is the value which was set
+				 * by the user.
+				 */
+				const listener = function(knob, value) {
+					console.log(value);
+				};
+
+				knob.addListener(listener);
+
+				// Create element node.
+				const node = knob.node();
+
+				// Add it to the DOM.
+				const elem = document.getElementById('gauge');
+				elem.appendChild(node);
+			}
+
+			function ready() {
+				demoKnob();
+			}
+
+			document.addEventListener('DOMContentLoaded', ready, false);
+
+      //End of Knob
+</script>
+</html>

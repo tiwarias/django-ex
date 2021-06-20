@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Customer Feedback Classification & Analysis</title>
+	{% load static %}
+	
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
+	<link rel="stylesheet" href="{% static 'materialize/css/materialize.min.css' %}">
+
+	<style {{ style_nonce }}>
+			body {
+				display: flex;
+				min-height: 100vh;
+				flex-direction: column;
+				font-family: "Lucida Grande", sans-serif;
+			}
+			main {
+				flex: 1 0 auto;
+			}
+			.margin-top{
+				margin-top: 10rem;
+			}
+			.my-height {
+				height: 2.3rem;
+			}
+			.wrapper {
+				display: block;
+			}
+
+			#sidebar {
+				margin-top: 69px;
+				margin-bottom: 30px;
+				min-width: 180px;
+				max-width: 180px;
+				height: 200vh;
+				position: fixed; 
+				top: 0;
+				left: 0;
+				/* top layer */
+				background-color: RGB(107,107,107);
+			}
+			#Main_heading {
+				font-size:24px;
+				color:white;
+			}
+			#Sub_heading {
+				font-size:15px;
+				color:white;
+				font-style:italic;
+				font-weight: bold;
+				z-index:9999;
+			}
+			#Welcome{
+				font-size:16px;
+				color:white;
+				margin-top:10x;
+				padding-left:600px;
+			}
+			#Logout{
+				font-size:14px;
+				padding-left:850px;
+				color:yellow;
+			}
+			.Exception{
+				font-size:18px;
+				color:red;
+			}
+			.a1_id {
+				margin-left:10px;
+			}
+			#b1_id{
+				color:dodgerblue;
+			}
+			#style1{
+				padding-top:15px;
+				background-color: RGB(95,0,95);
+			}
+			#style2{
+				background-color: RGB(95,0,95);
+			}
+			#section1{
+				margin-left:290px;
+			}
+			#btn1{
+				background-color: RGB(95,0,95);
+				margin-left:350px;
+			}
+			#footer1{
+				z-index:9999;
+			}
+
+		</style>
+</head>
+<header>
+	<nav class="my-height">
+		<div class="nav-wrapper valign-wrapper" id="style1">
+			<a href="/" ><span id="Main_heading"> &nbsp Customer Feedback Classification and Analysis </span></a>
+			<span id = "Welcome">&nbsp Hello, {{request.user}}</span>
+		</div>
+		<div class="nav-wrapper valign-wrapper" id="style2">
+			<span id="Sub_heading">&nbsp&nbsp&nbsp Powered by AI Zumba</span>
+			<span id="Logout"> <a href="{% url 'logout' %}">Logout</a></span>{% csrf_token %}
+		</div>
+	</nav>
+</header>
+
+<div class="wrapper">
+	<!-- Sidebar -->
+    <nav id="sidebar">
+		<br>
+		<ul>
+                  <a href="/" id="a1_id"><i class="fa fa-home"></i><b id="b1_id"> &nbsp Home </b></a>
+				  <!--<a href="/graphs"><i class="fa fa-edit"></i> &nbsp Dashboard </a>-->
+				  <a href="/admin_index" id="a1_id"><i class="fa fa-user"></i> &nbsp Admin </a>{% csrf_token %}
+        </ul>
+    </nav>
+	<br><br>
+</div>
+
+
+<br><br>
+<main>
+	<section class="container section" id="section1">
+		<form method="POST" class="center" enctype="multipart/form-data" action="{% url 'translate_comments' %}"> {% csrf_token %}
+			<div class="file-field input-field">
+				<div class="btn lighten-2" id = "btn1">
+					<span>File</span>
+					<input type="file" name="myfile" accept=".csv,.xlsx,.xls" required="required">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text" placeholder="Upload the feedback file">
+				</div>
+			</div>
+			<br>
+			<button class="btn waves-effect waves-light lighten-2 my-btn" id = "btn1" 
+				type="submit" name="action" onclick="changeCursor()">Feedback Analysis</button>
+				<br><br>
+				<div class="row">
+					<span id = "Exception"><b>{{exception_error}}</b></span>
+					<span id = "Exception"><b>{{exception_text}}</b></span>
+			  </div>
+		</form>
+	</section>
+</main>
+
+<footer class="page-footer transparent" id="footer1">
+	<div class="footer-copyright darken-2 my-height valign-wrapper" id= "btn1">
+		<div class="container white-text center">
+		<h6>Copyright © 2020 All rights reserved:
+                    <a href="#"> www.tcs.com</a>
+                    <span>|</span>
+                    Terms of Use and Privacy</h6></div>
+	</div>
+</footer>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'materialize/js/materialize.min.js' %}"></script>
+</body>
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>-->
+<script {{ script_nonce }} >
+function changeCursor(){
+            document.getElementsByClassName("my-btn")[0].style.cursor = "no-drop";
+        }
+</script>
+</html>

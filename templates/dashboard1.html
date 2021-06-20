@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Product Search</title>
+	{% load static %}
+	
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'materialize/css/materialize.min.css' %}">
+    <script src="{% static 'js/Chart.min.js' %}"></script> 
+	
+	<style>
+			body {
+				display: flex;
+				min-height: 100vh;
+				flex-direction: column;
+			}
+			main {
+				flex: 1 0 auto;
+			}
+			.margin-top{
+				margin-top: 10rem;
+			}
+			.my-height {
+				height: 2.95rem;
+			}
+			.wrapper {
+				display: block;
+				background-color:white;
+			}
+			#header1
+			{
+				background-color:RGB(95,0,95);
+			}
+			#Main_heading {
+				font-size:30px;
+				color:white;
+				margin-top:10px;
+				margin-left:10px;
+				
+			}
+			#Sub_heading {
+				font-size:18px;
+				color:white;
+			}
+			.head1 {
+				padding-left:210px;
+				padding-bottom:5px;
+			}
+			#Welcome{
+				font-size:20px;
+				color:white;
+				margin-top:10x;
+				position:absolute;
+				right:300px;
+			}
+			#Home{
+				font-size:20px;
+				color:white;
+				margin-top:10x;
+				position:absolute;
+				right:220px;
+			}
+			#Logout{
+				font-size:20px;
+				color:white;
+				margin-top:10x;
+				position:absolute;
+				right:40px;
+			}
+			#Agents{
+				font-size:20px;
+				color:white;
+				margin-top:10x;
+				position:absolute;
+				right:140px;
+			}
+			.Exception{
+				font-size:18px;
+				color:red;
+			}
+			.a1_id {
+				margin-left:100px;
+			}
+			#b1_id{
+				color:dodgerRGB(95, 0, 95);
+			}
+			#style1{
+				padding-top:25px;
+				background-color: RGB(95, 0, 95);
+			}
+			#style2{
+				background-color: RGB(95, 0, 95);
+				z-index:9999;
+			}
+			#section1{
+				margin-left:240px;
+			}
+			#btn1{
+				background-color: RGB(95, 0, 95);
+				margin-left:0px;
+			}
+			#footer1{
+				background-color: RGB(95, 0, 95);
+				z-index:9999;
+				width:100%;
+			}
+			#dropdown{
+				display:flex;
+				width:100%;
+			}
+			#product_id{
+				margin-left:200px;
+				
+			}
+			#product_label{
+				margin-left:450px;
+			}
+			label{
+				font-size:16px;
+				color:black;
+			}
+			
+			.tab {
+			  overflow: hidden;
+			  border: 1px solid #ccc;
+			  background-color: #f1f1f1;
+			}
+
+			/* Style the buttons inside the tab */
+			.tab button {
+			  background-color: inherit;
+			  float: center;
+			  border: none;
+			  outline: none;
+			  cursor: pointer;
+			  padding: 14px 220px;
+			  transition: 0.3s;
+			  font-size: 20px;
+			}
+
+			/* Change background color of buttons on hover */
+			.tab button:hover {
+			  background-color: #ddd;
+			}
+
+			/* Create an active/current tablink class */
+			.tab button.active {
+			  background-color: #ccc;
+			}
+
+			/* Style the tab content */
+			.tabcontent {
+			  display: none;
+			  padding: 6px 12px;
+			  border: 1px solid #ccc;
+			  border-top: none;
+			}
+			
+			.wrapper {
+			  display: flex;
+			  background-color: white;
+			}
+
+			div {
+				height: auto;
+			}
+			
+			.tile {
+			  display: grid; 
+			  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.3);
+			  border-radius: 4px;
+			}
+			
+			.mybox {
+			  display: grid; 
+			grid-template-rows: 55px auto;
+			  margin-top:10px;
+			  background-color: #fff;
+			  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.3);
+			  border-radius: 4px;
+			  margin-left:20px; 
+			  height:360px; 
+			  width:800px
+			}
+            
+         .mybox_body {
+			  background-color: #8e5ea2;
+    		}
+         
+         .btn {
+          background-color: #8e5ea2;
+          border: none;
+          color: white;
+          padding: 1px 5px;
+          cursor: pointer;
+          font-size: 20px;
+        }
+        
+        /* Darker background on mouse-over */
+        .btn:hover {
+          background-color: #8e5ea2;
+        }
+		.th	{
+			text-align:center;height:40px
+		}
+		.td {
+			text-align:left;padding-left:10px;height:40px
+		}
+		
+		#KPI{
+			height:auto;margin-top:20px;
+		}
+		#NLP	{
+			height:auto;margin-top:20px
+		}
+		#region_form	{
+			display:flex
+		}
+		#open {
+			margin-left:160px; height:80px; width:300px; background-color:#3e95cd
+		}
+		#close	{
+			margin-left:60px; height:80px; width:300px; background-color:#8e5ea2
+		}
+		#total	{
+			 margin-left:60px; height:80px; width:300px; background-color:#3cba9f;
+		}
+		#tile1 {
+			font-size:25px;color:white;text-align:center
+		}
+		#box_title	{
+			color:white; font-size:20px; margin-top:10px; margin-left:10px
+		}
+		#box_full	{
+			margin-left:20px; width:100%; height:auto;
+		}
+		</style>
+</head>
+
+<header>
+		<div class="head-height" id='header1'>
+			<div class="head">
+			    <span id = "Main_heading">Incident Analysis Dashboard</span>
+				<div class="head1">
+				   <span id="Sub_heading"><i>Powered by AI Zumba</i></span>
+				   <span id = "Welcome">&nbsp Hello, {{request.user}}</span>
+				   <span id = "Home"><a href="/">Home</a></span>
+				   <span id="Logout"><a href="{% url 'logout' %}">Logout</a></span>{% csrf_token %}
+				</div>
+			</div>
+		</div>
+</header>
+
+<div id="main">
+							
+	<div class="tab">
+		<button class="tablinks" onclick="openCity(event, 'KPI')">Data Structure KPI Analysis</button>
+		<button class="tablinks" onclick="openCity(event, 'NLP')" id="defaultOpen">Description Analysis</button>
+	</div>
+		
+	<div id="KPI" class="tabcontent">
+				
+		<div id="Region">
+	
+			<form id="region_form" method="POST" enctype='multipart/form-data' action="{% url 'charts_region' %}"> {% csrf_token %}
+				<select id="region" class="form-control" name="region_name">
+					<option value="">Select Region</option>
+					{% for val1 in region %}
+					<option id="region" value="{{val1}}">{{ val1 }}</option>
+					{% endfor %}
+				</select>
+				&nbsp&nbsp&nbsp
+				<select id="country_id" class="form-control" name="country_name">
+					<option value="">Select Country</option>
+					{% for val2 in country %}
+					<option id="country" value="{{val2}}">{{ val2 }}</option>
+					{% endfor %}
+				</select>
+				&nbsp&nbsp&nbsp
+				<select id="city_id" class="form-control" name="city_name">
+					<option value="">Select City</option>
+					{% for val3 in city %}
+					<option id="cities" value="{{val3}}">{{ val3 }}</option>
+					{% endfor %}
+				</select>
+				&nbsp&nbsp&nbsp
+				<button type="submit" class="btn btn-success btn-sm">Submit</button>
+			</form>
+		</div>
+		
+		<br>	
+	
+		<div class="wrapper">
+		
+			<div id="open" class="tile">
+				<span id="tile1">OPEN INCIDENTS <br> {{ count_open }} </span>
+			</div>
+			
+			<div id="close" class="tile">
+				<span id="tile1">CLOSED INCIDENTS <br> {{ count_close}} </span>
+			</div>
+			
+			<div id="total" class="tile">
+				<span id="tile1">TOTAL INCIDENTS <br> {{ count_total }} </span>
+			</div>
+			
+		</div>
+		
+		<br>
+		
+		<div class="wrapper">
+			
+			<div class="mybox">
+	
+				<div class="mybox_body">
+					<p id="box_title"> 
+						TOP 10 KNOWLEDGE BASE ARTICLES 
+					<a id="downloadq" download="chart1.png" style="padding-left:220px">
+						<button class="btn" onClick="download('bar-chart')"><i class="fa fa-download"></i> </button>
+					</a>
+					</p>
+				</div>
+					 
+				<canvas id="bar-chart" height="120" style="padding-left:20px;margin-top:20px;margin-bottom:20px"></canvas> 
+				
+		</div>
+			
+		
+		<div class="mybox">
+			
+			<div class="mybox_body">
+				<p id="box_title"> 
+					KNOWLEDGE BASE ARTICLES USAGE ON INCIDENTS
+				</p>
+			</div>
+				 
+		   <canvas id="pie-chart" height="135" style="padding-left:20px;margin-top:10px"></canvas>
+			
+		</div>
+			
+		</div>
+		
+		<br>
+		
+		<div class="wrapper">
+				
+			<div class="mybox">
+			
+				<div class="mybox_body">
+					<p id="box_title"> 
+						TOP 10 RESOLUTION CATEGORIES
+					</p>
+				</div>
+					 
+				<canvas id="bar-chart-horizontal" height="140" style="padding-left:20px;margin-top:10px;"></canvas>
+			
+			</div>
+			
+			<div class="mybox">
+				
+				<div class="mybox_body">
+					<p id="box_title"> 
+						TOP 10 SERVICE OFFERINGS
+					</p>
+				</div>
+					 
+				<canvas id="bar-chart2" height="140" style="padding-left:20px;margin-top:20px"></canvas>
+				
+			</div>
+			
+		</div> 
+
+		<br>
+
+		<div class="wrapper" style="background-color:white">
+	 
+			<div class="mybox">
+				
+				<div class="mybox_body">
+					<p id="box_title">
+						INCIDENT DISTRIBUTION BY CONTACT TYPES
+					<a id="download" download="chart1.png" style="padding-left:140px">
+						<button class="btn" onClick="download('chartContainer')"><i class="fa fa-download"></i> </button>
+					</a>
+					</p>
+				</div>
+					 
+			   <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+				
+			</div>
+				
+			<div class="mybox">
+				
+				<div class="mybox_body">
+					<p id="box_title"> 
+					 TOP HOW TO'S
+					 <a id="download" download="chart1.png" style="padding-left:440px">
+						<button class="btn" onClick="download('doughnut1')"><i class="fa fa-download"></i> </button>
+					</a>
+					</p>
+				</div>
+					 
+			   <canvas id="doughnut1" height="130" style="padding-left:20px;margin-top:20px"></canvas>
+			
+			</div>
+		
+		</div>
+		
+		<br>
+		
+		<div class="wrapper">
+					
+			<div class="mybox" id="box_full">
+			   
+				<div class="mybox_body">
+					<p id="box_title"> 
+						MOST REOPENED INCIDENTS
+					</p>
+				</div>
+				
+				<div id="stmt">
+				
+					<table>
+						<thead>
+							{% for value in head %}
+								<th>{{ value }}</th>
+							{% endfor%}
+						</thead>
+						<tbody>
+							{% for key,value in content.items %}
+								<tr>
+									{% for v in value %}
+										<td>{{ v }}</td>
+										{% endfor %}
+								</tr>
+							{% endfor%}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+		</div>
+		
+		<br>
+		
+	</div>
+	
+	<div id="NLP" class="tabcontent">
+				
+		<div id="Region">
+	
+			<form id="region_form" method="POST" enctype='multipart/form-data' action="{% url 'charts_NLP_region' %}"> {% csrf_token %}
+				<select id="region_id" class="form-control" name="region_name">
+					<option value="">Select Region</option>
+					{% for val1 in region %}
+					<option id="region" value="{{val1}}">{{ val1 }}</option>
+					{% endfor %}
+				</select>
+				&nbsp&nbsp
+				<select id="country_id" class="form-control" name="country_name">
+					<option value="">Select Country</option>
+					{% for val2 in country %}
+					<option id="country" value="{{val2}}">{{ val2 }}</option>
+					{% endfor %}
+				</select>
+				&nbsp&nbsp
+				<select id="city_id" class="form-control" name="city_name">
+					<option value="">Select City</option>
+					{% for val3 in city %}
+					<option id="cities" value="{{val3}}">{{ val3 }}</option>
+					{% endfor %}
+				</select>
+				&nbsp&nbsp
+				<select id="contact_id" class="form-control" name="contact_name">
+					<option value="">Select Contact Type</option>
+					{% for val1 in contact_type %}
+					<option id="contact_type" value="{{val1}}">{{ val1 }}</option>
+					{% endfor %}
+				</select>
+				&nbsp&nbsp
+				<select id="offering_id" class="form-control" name="offering_name">
+					<option value="">Select Service Offering</option>
+					{% for val2 in offering %}
+					<option id="offering" value="{{val2}}">{{ val2 }}</option>
+					{% endfor %}
+				</select>
+				&nbsp&nbsp
+				<select id="category_id" name="category_name"  class="form-control">
+					<option value="">Select Category</option>
+					{% for val3 in category %}
+					<option id="category" value="{{val3}}">{{ val3 }}</option>
+					{% endfor %}
+				</select>
+				&nbsp&nbsp&nbsp
+				<button type="submit" class="btn btn-success btn-sm">Submit</button>
+			</form>
+			
+		</div>
+		
+		<br>
+		
+		<div class="wrapper">
+			
+			<div class="mybox">
+			
+				<div class="mybox_body">
+					<p id="box_title"> 
+						TOP KEYWORDS IN DESCRIPTION
+					</p>
+				</div>
+						 
+				<img src ="{% static 'images/wordcloud_naresh.png' %}" width="600" height="280" alt="Wordcloud" ></img>
+					
+			</div>
+				
+			<div class="mybox">
+				
+				<div class="mybox_body">
+					<p id="box_title"> 
+						DESCRIPTION ANALYSIS
+					<a id="downloadq" download="chart1.png" style="padding-left:270px">
+						<button class="btn" onClick="download('bar-chart')"><i class="fa fa-download"></i> </button>
+					</a>
+					</p>
+				</div>
+					 
+			   <canvas id="bar-chart1" height="135" style="padding-left:0px;margin-top:10px"></canvas>
+				
+			</div>
+				
+		</div>
+				
+		<br>
+			
+		<div class="wrapper">
+				
+			<div class="mybox">
+			
+				<div class="mybox_body">
+					<p id="box_title"> 
+						KNOWLEDGE BASE ANALYSIS
+					</p>
+				</div>
+					 
+			   <canvas id="bar-chart4" height="140" style="padding-left:0px;margin-top:10px;"></canvas>
+			
+			</div>
+			
+			<div class="mybox">
+			
+				<div class="mybox_body">
+					<p id="box_title"> 
+						TOP SEARCHED KEYWORDS IN KNOWLEDGE BASE
+					</p>
+				</div>
+					 
+			   <canvas id="bar-chart5" height="140" style="padding-left:20px;margin-top:10px;"></canvas>
+				
+			</div>
+					
+		</div>
+				
+	</div>
+
+</div>
+
+<footer class="page-footer transparent" id="footer1">
+	<div class="footer-copyright darken-2 my-height valign-wrapper" id= "btn1">
+		<div class="container white-text center">
+		<h6>Copyright © 2020 All rights reserved:
+                    <a href="#"> www.tcs.com</a>
+                    <span>|</span>
+                    Terms of Use and Privacy</h6></div>
+	</div>
+</footer>
+<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
+</body>
+<script>
+function changeCursor(){
+            document.getElementsByClassName("my-btn")[0].style.cursor = "no-drop";
+        }
+</script>
+
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+<script>
+
+new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {
+      labels: {{ kb_keys | safe }},
+      datasets: [
+        {
+          label: "KBA's",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: {{ kb_data }}
+        }
+      ]
+    },
+    options: {
+	legend: { display: false },
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+});
+
+new Chart(document.getElementById("pie-chart"), {
+    type: 'pie',
+    data: {
+      labels: ["KBA Used", "KBA Not Used", "KBA not Available"],
+      datasets: [{
+        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+        data: {{KB_pie}}
+      }]
+    },
+     options : {
+              showAllTooltips: true,
+              },
+});
+
+new Chart(document.getElementById("bar-chart-horizontal"), {
+    type: 'horizontalBar',
+    data: {
+      labels: {{ res_cat_keys | safe }},
+      datasets: [
+        {
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: {{ res_cat_data }}
+        }
+      ]
+    },
+    options: {
+	legend: { display: false },
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+});
+
+new Chart(document.getElementById("bar-chart2"), {
+    type: 'bar',
+    data: {
+      labels: {{ ser_off_keys | safe }},
+      datasets: [
+        {
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: {{ ser_off_data }}
+        }
+      ]
+    },
+    options: {
+	legend: { display: false },
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+});
+  
+new Chart(document.getElementById("doughnut1"), {
+    type: 'doughnut',
+    data: {
+      labels: {{ how_to_keys | safe }},
+      datasets: [
+        {
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: {{ how_to_data }}
+        }
+      ]
+    },
+    options: {
+      legend: { display: true },
+      showAllTooltips: true,
+    }
+});
+  
+                // Show tooltips always even the stats are zero
+
+Chart.pluginService.register({
+  beforeRender: function(chart) {
+    if (chart.config.options.showAllTooltips) {
+      // create an array of tooltips
+      // we can't use the chart tooltip because there is only one tooltip per chart
+      chart.pluginTooltips = [];
+      chart.config.data.datasets.forEach(function(dataset, i) {
+        chart.getDatasetMeta(i).data.forEach(function(sector, j) {
+          chart.pluginTooltips.push(new Chart.Tooltip({
+            _chart: chart.chart,
+            _chartInstance: chart,
+            _data: chart.data,
+            _options: chart.options.tooltips,
+            _active: [sector]
+          }, chart));
+        });
+      });
+
+      // turn off normal tooltips
+      chart.options.tooltips.enabled = false;
+    }
+  },
+  afterDraw: function(chart, easing) {
+    if (chart.config.options.showAllTooltips) {
+      // we don't want the permanent tooltips to animate, so don't do anything till the animation runs atleast once
+      if (!chart.allTooltipsOnce) {
+        if (easing !== 1)
+          return;
+        chart.allTooltipsOnce = true;
+      }
+
+      // turn on tooltips
+      chart.options.tooltips.enabled = true;
+      Chart.helpers.each(chart.pluginTooltips, function(tooltip) {
+        tooltip.initialize();
+        tooltip.update();
+        // we don't actually need this since we are not animating tooltips
+        tooltip.pivot();
+        tooltip.transition(easing).draw();
+      });
+      chart.options.tooltips.enabled = false;
+    }
+  }
+});
+      
+</script>
+  
+  
+<script>
+  
+var chart = new CanvasJS.Chart("chartContainer", {
+   animationEnabled: true,
+	theme: "light1", //"light1", "dark1", "dark2"
+	data: [{
+		type: "funnel",
+		indexLabel: "{label} [{y}%]",
+		toolTipContent: "{label} - {y}%",
+		dataPoints: [
+        {y: (16235/31195)*100, label: 'Phone'},
+        {y: (6445/31195)*100, label: 'ITS Service Portal'},
+        {y: (5035/31195)*100, label: 'Chat'},
+        {y: (1079/31195)*100, label: 'Email'},
+        {y: (909/31195)*100, label: 'Self-creation'},
+        {y: (603/31195)*100, label: 'ITS Service Kiosk'},
+        {y: (583/31195)*100, label: 'Self-service'},
+        {y: (134/31195)*100, label: 'NEOAPP'},
+        {y: (128/31195)*100, label: 'NEOBOT'},
+        {y: (44/31195)*100, label: 'Event'}
+		]
+	}]
+});
+  
+chart.render();
+
+</script>
+
+<script>
+
+new Chart(document.getElementById("bar-chart1"), {
+    type: 'bar',
+    data: {
+      labels: {{ desc_trigram_keys | safe }},
+      datasets: [
+        {
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: {{ desc_trigram_val }}
+        }
+      ]
+    },
+    options: {
+	legend: { display: false },
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+});
+
+new Chart(document.getElementById("bar-chart4"), {
+    type: 'bar',
+    data: {
+      labels: {{ desc_trigram_keys | safe }},
+      datasets: [
+        {
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: {{ desc_trigram_val }},
+        }
+      ]
+    },
+    options: {
+	legend: { display: false },
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+});
+  
+new Chart(document.getElementById("bar-chart5"), {
+    type: 'bar',
+    data: {
+      labels: ["zoom", "vdi", "virtual desktop", "sh-br-os2-campinas_", "ms outlook", "direct access", "sh-br-os2-suzano_sched", "password reset", "bitlocker", "airwatch"],
+      datasets: [
+        {
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2", "#3cba9f", "#8e5ea2","#3cba9f"],
+          data: [83,70,57,46,45,33,22,17,16,16]
+        }
+      ]
+    },
+    options: {
+	legend: { display: false },
+    scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+    }
+}
+});
+  
+
+</script>
+
+<script>
+
+function download(id) {
+var download = document.getElementById("download");
+var image = document.getElementById(id).toDataURL("image/png")
+    .replace("image/png", "image/octet-stream");
+download.setAttribute("href", image);
+//download.setAttribute("download","archive.png");
+}
+
+</script>
+
+</html>

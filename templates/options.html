@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--<script type="text/javascript" src="https://kit.fontawesome.com/a076d05399.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a href="#home">Home</a>
+  <a href="#news">News</a>
+  <div class="dropdown">
+    <button class="dropbtn">More 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </div>
+  </div> 
+</div>
+
+<h3>More Button/Dropdown Menu inside a Navigation Bar</h3>
+<p>Hover over the "More" link to see the dropdown menu.</p>
+
+
+<button class="btn btn-success btn-lg" style="font-size:24px"><i class="material-icons fa-2x" style="width:180px">android</i><br> Chatbot</button>
+
+<button class="btn btn-success btn-lg" style="font-size:24px"><i class="material-icons fa-2x" style="width:180px">phone_in_talk</i><br> Phone</button>
+<button class="btn btn-success btn-lg" style="font-size:24px"><i class="material-icons fa-2x" style="width:180px,background-color:"dark-grey">desktop_mac</i><br>Self Service</button>
+
+<button class="btn btn-success btn-lg" style="font-size:24px"><i class="material-icons fa-2x">record_voice_over</i><br>Virtual Agent</button>
+<button class="btn btn-success btn-lg" style="font-size:24px"><i class="material-icons fa-2x">wifi_protected_setup</i><br>All Channels</button>
+
+
+<br><br>
+<button class="btn btn-info btn-lg" style="font-size:24px"><i class="material-icons fa-2x">chat_bubble</i><br> Chatbot</button>
+<a href="#" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-earphone"></span> Phone
+        </a>
+<button class="btn btn-info btn-lg" style="font-size:24px">Phone <i class="fa fa-phone-square"></i></button>
+
+<a class="btn btn-lg btn-success" href="#">
+  <i class="fa fa-phone fa-2x pull-left"></i>Phone</a>
+<button class="btn btn-info btn-lg" style="font-size:24px">Virtual Agent <i class="fa fa-user-circle"></i></button>
+<p>Used on a button:</p>
+<button style='font-size:24px'>Phone<i class='fa fa-phone'></i></button>
+
+<p>Used on a button:</p>
+<button style='font-size:24px'>Chatbot<i class='fa fa-weixin fa-fw'></i></button>
+
+<p>Used on a button:</p>
+<button style='font-size:24px'>Self Service<i class='fa fa-window-restore fa-fw'></i></button>
+
+<p>Used on a button:</p>
+<button style='font-size:24px'>Virtual Agent<i class='fa fa-user-circle'></i></button>
+
+
+<p>Unicode:</p>
+<i style='font-size:24px' class='fas'>&#xf007;</i>
+
+<!-- Entire Panel of the page -->
+                <!-- tech stack plugin section start -->
+                <div class="demo bg-light-purple pt-4 pb-4">
+                    <div class="container container-1200 info-wrapper">
+                        <!-- tech stack heading row start -->
+                        <div class="row">
+                            <div class="col">
+                                <div class="h2 text-center tech-stack-title">Please select the channel to view the Feedback</div>
+                            </div>
+                        </div>
+                        <!-- tech stack heading row end -->
+                        <div class="row pt-3">
+                            <div class="col-md-12">
+                                <ul id="front-end-lib" class="list-inline text-center">
+                                    <li class="list-inline-item pr-6 align-top">
+                                        <a class="techstack-link" href="https://www.fusioncharts.com/dev/getting-started/plain-javascript/your-first-chart-using-plain-javascript?utm_source=downloadPackage&utm_medium=referral&utm_campaign=trial" target="_blank">
+                                            <img class="techstack-logo" src="assets/images/js.svg" width="75" height="75" alt="JS" />
+                                            <p>Chatbot</p>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item pr-6 align-top">
+                                        <a class="techstack-link" href="https://www.fusioncharts.com/dev/getting-started/angular/angular/your-first-chart-using-angular?utm_source=downloadPackage&utm_medium=referral&utm_campaign=trial" target="_blank">
+                                            <img class="techstack-logo" src="assets/images/angular-2.svg" width="75" height="75" alt="Angular 2.x+" />
+                                            <p>Phone</p>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item pr-6 align-top">
+                                        <a class="techstack-link" href="https://www.fusioncharts.com/dev/getting-started/angular/angularjs/your-first-chart-using-angularjs?utm_source=downloadPackage&utm_medium=referral&utm_campaign=trial" target="_blank">
+                                            <img class="techstack-logo" src="assets/images/angular-1.svg" width="75" height="75" alt="AngularJS" />
+                                            <p>Self Service</p>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item pr-6 align-top">
+                                        <a class="techstack-link" href="https://www.fusioncharts.com/dev/getting-started/react/your-first-chart-using-react?utm_source=downloadPackage&utm_medium=referral&utm_campaign=trial" target="_blank">
+                                            <img class="techstack-logo" src="assets/images/react.svg" width="75" height="75" alt="React" />
+                                            <p>Virtual Agent</p>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item pr-6 align-top">
+                                        <a class="techstack-link" href="https://www.fusioncharts.com/dev/getting-started/vue/your-first-chart-using-vuejs?utm_source=downloadPackage&utm_medium=referral&utm_campaign=trial" target="_blank">
+                                            <img class="techstack-logo" src="assets/images/vue.svg" width="75" height="75" alt="Vue.js" />
+                                            <p>All Channels</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+</body>
+</html>

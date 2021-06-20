@@ -1,0 +1,5 @@
+[translations]
+subscription_key = d0afc9641c864a84bdd6990ad0b1a8fb
+subscription_region = Global
+base_url = https://api.cognitive.microsofttranslator.com
+path = /translate?api-version=3.0

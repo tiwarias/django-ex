@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Customer Feedback Classification & Analysis</title>
+	{% load static %}
+	
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
+	<link rel="stylesheet" href="{% static 'materialize/css/materialize.min.css' %}">
+	<link rel="stylesheet" href="{% static 'material/static/material/fonts/material-design-icons/material-icons.css' %}">
+	
+	</head>
+	<style>
+			body {
+				display: flex;
+				min-height: 100vh;
+				flex-direction: column;
+				font-family: "Lucida Grande", sans-serif;
+				overflow-x:hidden;
+			}
+			main {
+				flex: 1 0 auto;
+			}
+			.margin-top{
+				margin-top: 10rem;
+			}
+			.keyword_body{
+         	height: 300px;
+			width:400px;
+         	overflow: scroll;
+         	text-align: justify;
+         	overflow-x: hidden;
+         	overflow-y: scroll;
+         
+         	}
+			.my-height {
+				height: 2.4rem;
+			}
+			.my-footer{
+				height: 20px;
+
+			}
+			.wrapper {
+				display: block;
+			}
+
+			#sidebar {
+				margin-top: 69px;
+				margin-bottom: 30px;
+				min-width: 180px;
+				max-width: 180px;
+				height: 200vh;
+				position: fixed; 
+				top: 0;
+				left: 0;
+				/* top layer */
+				background-color: RGB(107,107,107);
+			}
+			.dropdown {
+			  position: relative;
+			  margin-left:150px;
+			  margin-top:150px;
+			  display: inline-block;
+			}
+			#nav1 {
+				position:fixed;
+				z-index:99999;
+			}
+			#header1 {
+				padding-top:15px;
+				background-color: RGB(95,0,95);
+			}
+			#header2 {
+				font-size:24px;
+				color:white;
+			}
+			#header3 {
+				padding-left:0px;
+				background-color: RGB(95,0,95);
+			}
+			#header4 {
+				color:white;
+				font-size: 15px;
+				font-style:italic;
+				font-weight: bold;
+				text-align: left;
+			}
+			#label1 {
+				font-size:18px;
+				color:black;
+			}
+			.border1 {
+				border:2px solid black;
+			}
+			#btn3 {
+				margin-left:30px;
+			}
+			#btn4 {
+				font-weight:bold;
+				width:200px;
+				height:200px;
+				background-color: green;
+			}
+			#btn5 {
+				font-weight: bold;
+			}
+			#lbl1 {
+				font-size:18px;
+				color:black;
+			}
+			#lbl2 {
+				background-color:black;
+			}
+			#lbl3 {
+				padding-top:5px;
+				padding-bottom:5px;
+			}
+			#lbl4 {
+				color:white;
+				font-size:18px;
+				margin-left:80px;
+				margin-right:20px;
+				padding-left:60px;
+			}
+			#lbl5 {
+				background-color:rgb(255,255,255);
+				padding-top: 10px;
+			}
+			#lbl6 {
+				margin-top:5px;
+				margin-bottom:10px;
+				margin-left:10px;
+			}
+			#lbl7 {
+				background-color:rgb(255,255,255);
+			}
+			#lbl8 {
+				color:black;
+			}
+			#lbl9 {
+				margin-left:12px;
+				color:black;
+				font-size:14px;
+			}
+			#Welcome {
+				font-size:16px;
+				color:white;
+				margin-top:10x;
+				margin-left:595px;
+			}
+			#Logout {
+				font-size:14px;
+				margin-top:00px;
+				margin-left:950px;
+				color:yellow;
+			}
+			.a1_id {
+				margin-left:10px
+			}
+			#b1_id {
+				color:dodgerblue;
+			}
+			#text {
+				font-size:18px;
+				color:blueviolet;
+			}
+			#message {
+				font-size:18px;
+				color:red;
+			}
+			#footer1 {
+				z-index:9999;
+				width:100%;
+				position:fixed;
+				bottom:0;
+			}
+			#footer2 {
+				background-color: RGB(95,0,95);
+			}
+		</style>
+<body>
+
+<header>
+	<nav class="my-height" id="nav1">
+		<div class="nav-wrapper valign-wrapper" id="header1">
+			<a href="/" ><span id="header2"> &nbsp Customer Feedback Classification and Analysis </span></a>
+			<span id="Welcome">&nbsp Hello, {{request.user}}</span>
+		</div>
+		<div class="nav-wrapper valign-wrapper" id="header3">
+			<span id="header4">&nbsp&nbsp&nbsp Powered by AI Zumba</span>
+			<span id="Logout"> <a href="{% url 'logout' %}">Logout</a></span>{% csrf_token %}
+		</div>
+	</nav>
+</header>
+
+<main>
+      <br><br><br><br>
+        <div class="container-fluid">
+		<div class="row">
+
+		 <div class="col-sm-2">
+			<nav id="sidebar">
+
+				<br>
+				<ul>
+						  <a href="/" id="a1_id"><i class="fa fa-home"></i> &nbsp Home </a>
+						  <a href="/admin_index" id="a1_id"><i class="fa fa-user"></i> &nbsp Admin </a>
+				</ul>
+			</nav>
+
+		 </div>
+		 
+
+		 <div class="col-sm-10">
+		<form method="POST"> {% csrf_token %}
+			<div class="row">
+			<button class="btn btn-success btn-lg" name="channel_input" value= "EMEA" style="font-size:18px;font-weight:bold;width:190px;height:100px;background-color: #8e5ea2;" formaction="{% url 'filter_results' %}">EMEA <br> {{chatbot_count | safe}}</button>{% csrf_token %}
+			<span style="width:40px"></span>
+			<button class="btn btn-success btn-lg" name="channel_input" value= "CAA" style="font-size:18px;font-weight:bold;width:190px;height:100px;background-color: #8e5ea2;" formaction="{% url 'filter_results' %}">CAA <br> {{phone_count | safe}} </button>{% csrf_token %}
+			<span style="width:40px"></span>
+			<button class="btn btn-success btn-lg" name="channel_input" value= "South Asia" style="font-size:18px;font-weight:bold;width:190px;height:100px;background-color: #8e5ea2;" formaction="{% url 'filter_results' %}">South Asia <br> {{ss_count | safe}} </button>{% csrf_token %}
+			<span style="width:40px"></span>
+			<button class="btn btn-success btn-lg" name="channel_input" value= "All Channels" style="font-size:18px;font-weight:bold;width:190px;height:100px;background-color: #8e5ea2;" formaction="{% url 'filter_results' %}">All Regions <br> {{all_count | safe}}</button>{% csrf_token %}
+			</div>
+		</form>
+		</div>
+		
+		</div>
+	</div>
+	
+</main>
+
+
+<footer class="page-footer transparent" id="footer1">
+	<div class="footer-copyright darken-2 my-footer valign-wrapper" id="footer2">
+		<div class="container white-text center">
+		<h6>Copyright © 2020 All rights reserved:
+                    <a href="#"> www.tcs.com</a>
+                    <span>|</span>
+                    Terms of Use and Privacy</h6></div>
+	</div>
+</footer>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'materialize/js/materialize.min.js' %}"></script>
+<script src="{% static 'js/Chart.min.js' %}"></script>
+    <script src="{% static 'js/d3.js' %}"></script>
+    <script src="{% static 'js/d3.layout.cloud.js' %}"></script>
+</body>
+</html>
