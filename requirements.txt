@@ -148,7 +148,6 @@ sklearn==0.0
 smart-open==3.0.0
 snowballstemmer==2.0.0
 sortedcontainers==2.2.2
-spacy==2.3.5
 spacy-langdetect==0.1.2
 spacy-legacy==3.0.2
 Sphinx==3.5.4
