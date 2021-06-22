@@ -26,7 +26,6 @@ cloudpickle==1.6.0
 colorama==0.4.4
 csp==0.1a10
 cycler==0.10.0
-cymem==2.0.5
 decorator==4.4.2
 defusedxml==0.7.1
 diff-match-patch==20200713
