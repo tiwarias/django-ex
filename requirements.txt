@@ -158,7 +158,6 @@ terminado==0.9.1
 testpath==0.4.4
 textblob==0.15.3
 textdistance==4.2.1
-thinc==7.4.5
 threadpoolctl==2.1.0
 three-merge==0.1.1
 tifffile==2020.10.1
