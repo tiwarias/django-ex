@@ -36,8 +36,6 @@ django-csp==3.7
 django-csp-nonce==1.0.0
 django-debug-toolbar==1.11.1
 docutils==0.16
-en-core-web-lg
-en-core-web-sm
 entrypoints==0.3
 filelock==3.0.12
 flake8==3.8.4
