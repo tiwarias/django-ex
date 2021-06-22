@@ -24,7 +24,6 @@ chartjs==1.2
 click==7.1.2
 cloudpickle==1.6.0
 colorama==0.4.4
-cryptography
 csp==0.1a10
 cycler==0.10.0
 cymem==2.0.5
